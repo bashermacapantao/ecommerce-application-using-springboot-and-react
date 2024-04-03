@@ -3,7 +3,6 @@ package springboot.ecommerce.ecommerceapplicationusingspringbootandreact.control
 import java.util.List;
 
 // import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +19,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
-@RestController
-@RequestMapping("/products")
+@RestController // annotation is used to mark the class as a REST controller.
+@RequestMapping("/products") // sets the base URL for all endpoints defined in this controller.
 public class ProductController {
     private final ProductService productService;
 
-    // @Autowired
+    // @Autowired // is used to inject the ProductService dependency into the controller.
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
@@ -38,6 +37,7 @@ public class ProductController {
     
     // GET /products/{id} - Get product by ID
     @GetMapping("/{id}")
+    //ResponseEntity is used to customize the HTTP response status and body.
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         Product product = productService.getProductById(id);
         return ResponseEntity.ok().body(product);
@@ -45,6 +45,7 @@ public class ProductController {
 
     // POST /products - Create a new product
     @PostMapping
+    //@RequestBody - annotation is used to bind the request body to a method parameter.
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
         Product createdProduct = productService.createProduct(product);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
@@ -59,6 +60,7 @@ public class ProductController {
 
     // DELETE /products/{id} - Delete a product
     @DeleteMapping("/{id}")
+    //@PathVariable annotation is used to bind the placeholder in the URL to a method parameter.
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
